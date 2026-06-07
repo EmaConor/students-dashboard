@@ -1,8 +1,14 @@
+import os
+from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-# pip install openpyxl # leer archivos Excel
 from datetime import datetime
+
+load_dotenv()
+
+EXCEL_PATH = os.getenv("EXCEL_FILE_PATH", "ListadoDeEstudiantesGrupo_051.xlsx")
+SHEET_NAME = os.getenv("SHEET_NAME", "Hoja2")
 
 st.set_page_config(
     page_title="Dashboard Estudiantes Grupo 051",
@@ -10,7 +16,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded")
 
-dfDatos = pd.read_excel('ListadoDeEstudiantesGrupo_051.xlsx', sheet_name='Hoja2')
+dfDatos = pd.read_excel(EXCEL_PATH, sheet_name=SHEET_NAME)
 
 # Limpiar y preparar datos
 dfDatos['Fecha_Nacimiento'] = pd.to_datetime(dfDatos['Fecha_Nacimiento'], errors='coerce')
